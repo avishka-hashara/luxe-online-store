@@ -1,0 +1,150 @@
+/* ============================================
+   LUXE STORE — Admin Extra Styles
+   ============================================ */
+
+/* Tighten main-content padding in admin */
+.admin-layout .admin-content .card:last-child {
+    margin-bottom: 0;
+}
+
+/* Code tags */
+code {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+/* Disabled buttons */
+button[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
+/* Inline form selects in tables */
+table select.form-control {
+    padding: 0.25rem 2rem 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    background-color: var(--bg-2);
+    cursor: pointer;
+}
+
+/* Modal overlay close on backdrop click */
+.modal-overlay {
+    cursor: default;
+}
+
+/* Sticky table header */
+thead th {
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 1;
+}
+
+/* Status select color coding */
+select option[value="pending"]    { color: #f9ca5f; }
+select option[value="processing"] { color: #7abfe8; }
+select option[value="shipped"]    { color: #a29bfe; }
+select option[value="delivered"]  { color: #6fcf97; }
+select option[value="cancelled"]  { color: #e87a6f; }
+
+/* Highlight active sidebar item with gold bar */
+.sidebar-link.active {
+    position: relative;
+}
+.sidebar-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--gold);
+    border-radius: 0 2px 2px 0;
+}
+
+/* Chart/graph placeholder */
+.chart-placeholder {
+    height: 200px;
+    background: var(--bg-3);
+    border: 1px dashed var(--border-light);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+}
+
+/* Page breadcrumb */
+.breadcrumb {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.breadcrumb a { color: var(--text-dim); }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb .sep { color: var(--border-light); }
+
+/* Quick action buttons row */
+.quick-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+/* Table row number column */
+td:first-child, th:first-child {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Input group (icon + input) */
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.input-group .input-icon {
+    position: absolute;
+    left: 0.75rem;
+    color: var(--text-dim);
+    pointer-events: none;
+    font-size: 0.9rem;
+}
+.input-group .form-control {
+    padding-left: 2.2rem;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+.page-btn {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    background: var(--surface);
+    cursor: pointer;
+    transition: var(--transition);
+}
+.page-btn:hover, .page-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* Responsive admin table tweaks */
+@media (max-width: 768px) {
+    .page-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .stats-grid  { grid-template-columns: repeat(2, 1fr) !important; }
+    table th:nth-child(n+5),
+    table td:nth-child(n+5) { display: none; }
+}

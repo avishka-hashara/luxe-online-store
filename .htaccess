@@ -1,0 +1,40 @@
+Options -Indexes
+ServerSignature Off
+
+# Prevent direct access to includes/
+<FilesMatch "^(config|db|auth|header|footer)\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to .sql files
+<FilesMatch "\.sql$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Force UTF-8
+AddDefaultCharset UTF-8
+
+# Basic security headers
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Disable ETags
+FileETag None
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css         "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/png        "access plus 1 month"
+    ExpiresByType image/jpg        "access plus 1 month"
+    ExpiresByType image/jpeg       "access plus 1 month"
+    ExpiresByType image/gif        "access plus 1 month"
+    ExpiresByType image/svg+xml    "access plus 1 month"
+</IfModule>
