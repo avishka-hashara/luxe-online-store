@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.php",
+      "use": "@vercel/php"
+    },
+    {
+      "src": "admin-reset.php",
+      "use": "@vercel/php"
+    },
+    {
+      "src": "admin/*.php",
+      "use": "@vercel/php"
+    },
+    {
+      "src": "pages/*.php",
+      "use": "@vercel/php"
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/$",
+      "dest": "/index.php"
+    },
+    {
+      "src": "^/admin$",
+      "dest": "/admin/index.php"
+    },
+    {
+      "src": "^/includes/(.*)$",
+      "status": 404
+    },
+    {
+      "src": "^/(.*)\\.sql$",
+      "status": 404
+    }
+  ]
+}
