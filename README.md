@@ -190,7 +190,6 @@ define('SITE_URL', 'http://localhost/store');  // Adjust if needed
 - Minimum 8 characters
 - At least 1 uppercase letter
 - At least 1 number
-- Real-time strength indicator on registration
 
 ---
 
