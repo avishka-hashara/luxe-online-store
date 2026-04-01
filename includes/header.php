@@ -19,6 +19,16 @@
         </a>
         <div class="nav-links">
             <a href="<?= SITE_URL ?>/index.php">Shop</a>
+            <!-- Cart Icon -->
+            <?php
+                $cart_count = array_sum(array_column($_SESSION['cart'] ?? [], 'quantity'));
+            ?>
+            <a href="<?= SITE_URL ?>/pages/cart.php" class="nav-cart" id="nav-cart">
+                🛒
+                <span class="cart-badge" id="cart-badge" <?= $cart_count === 0 ? 'style="display:none;"' : '' ?>>
+                    <?= $cart_count ?>
+                </span>
+            </a>
             <?php if (is_logged_in()): ?>
                 <a href="<?= SITE_URL ?>/pages/account.php">My Account</a>
                 <?php if (is_admin()): ?>
