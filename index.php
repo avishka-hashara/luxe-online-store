@@ -114,10 +114,22 @@ require_once __DIR__ . '/includes/header.php';
                             <?= $product['stock'] > 10 ? 'In Stock' : ($product['stock'] > 0 ? 'Low Stock' : 'Sold Out') ?>
                         </span>
                     </div>
+                    <?php if ($product['stock'] > 0): ?>
+                        <button class="btn btn-primary btn-full btn-add-cart mt-2"
+                                data-id="<?= $product['id'] ?>"
+                                data-name="<?= sanitize($product['name']) ?>">
+                            Add to Cart
+                        </button>
+                    <?php else: ?>
+                        <button class="btn btn-secondary btn-full mt-2" disabled>Sold Out</button>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
+
+<!-- CSRF token for cart AJAX -->
+<input type="hidden" id="csrf_token" value="<?= csrf_token() ?>">
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

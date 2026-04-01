@@ -5,12 +5,14 @@
 require_once __DIR__ . '/../includes/auth.php';
 
 if (is_logged_in()) {
-    header('Location: ' . SITE_URL . '/index.php');
+    $goto = ($_GET['redirect'] ?? '') === 'checkout' ? SITE_URL . '/pages/checkout.php' : SITE_URL . '/index.php';
+    header('Location: ' . $goto);
     exit;
 }
 
 $error = '';
 $login_val = '';
+$redirect_param = $_GET['redirect'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) {
@@ -18,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $login_val = trim($_POST['login'] ?? '');
         $password  = $_POST['password'] ?? '';
+        $redirect_param = $_POST['redirect_param'] ?? '';
 
         if (empty($login_val) || empty($password)) {
             $error = 'Please fill in all fields.';
@@ -25,9 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = login_user($login_val, $password);
             if ($result['success']) {
                 flash('success', 'Welcome back, ' . $_SESSION['full_name'] . '!');
-                $redirect = $result['role'] === 'admin'
-                    ? SITE_URL . '/admin/index.php'
-                    : SITE_URL . '/index.php';
+                if ($result['role'] === 'admin') {
+                    $redirect = SITE_URL . '/admin/index.php';
+                } elseif ($redirect_param === 'checkout') {
+                    $redirect = SITE_URL . '/pages/checkout.php';
+                } else {
+                    $redirect = SITE_URL . '/index.php';
+                }
                 header('Location: ' . $redirect);
                 exit;
             } else {
@@ -51,6 +58,7 @@ require_once __DIR__ . '/../includes/header.php';
 
     <form action="" method="POST" novalidate>
         <?= csrf_field() ?>
+        <input type="hidden" name="redirect_param" value="<?= sanitize($redirect_param) ?>">
 
         <div class="form-group">
             <label class="form-label" for="login">Username or Email</label>
